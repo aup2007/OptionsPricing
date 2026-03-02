@@ -30,12 +30,18 @@ def compute_historical_volatility(prices):
 
 @st.cache_data
 def fetch_options_chain(ticker, expiry):
-    """Returns calls_df, puts_df for a specific expiry."""
     try:
         tk = yf.Ticker(ticker)
+        # Check if any expirations exist at all
+        available_expiries = tk.options
+        if not available_expiries:
+            print(f"No options available for {ticker}")
+            return pd.DataFrame(), pd.DataFrame()
+            
         chain = tk.option_chain(expiry)
         return chain.calls, chain.puts
-    except Exception:
+    except Exception as e:
+        print(f"Error fetching {ticker} for {expiry}: {e}")
         return pd.DataFrame(), pd.DataFrame()
 
 @st.cache_data
