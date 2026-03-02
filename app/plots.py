@@ -3,12 +3,8 @@ import numpy as np
 import pandas as pd
 
 def plot_heatmap(x_values, y_values, z_values, x_label, y_label, title, color_scheme="RdBu"):
-    """
-    Generates a Plotly heatmap.
-    If color_scheme is 'RdBu', it assumes a divergent scale (Red=Neg, White=0, Blue/Green=Pos).
-    """
     
-    # Custom Divergent Colorscale: Red -> White -> Green
+
     custom_scale = [
         [0.0, "red"],
         [0.5, "white"],
@@ -17,7 +13,7 @@ def plot_heatmap(x_values, y_values, z_values, x_label, y_label, title, color_sc
     
     scale = custom_scale if color_scheme == "RedGreen" else "Viridis"
     
-    # Force symmetry for Red/Green P&L charts so 0 is white
+
     z_min = np.min(z_values)
     z_max = np.max(z_values)
     
